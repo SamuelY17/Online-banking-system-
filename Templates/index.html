@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureBank Pro - Online Banking</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* Navigation Styles */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.nav-brand i {
+    margin-right: 10px;
+    color: #3498db;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.nav-menu li {
+    margin-left: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 25px;
+}
+
+.nav-link:hover {
+    color: #3498db;
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #2c3e50;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.section {
+    display: none;
+    padding: 100px 20px 50px;
+    min-height: 100vh;
+}
+
+.section.active {
+    display: block;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #3498db;
+    border: 2px solid #3498db;
+}
+
+.btn-secondary:hover {
+    background: #3498db;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.btn-loader {
+    margin-left: 10px;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 50px 0;
+}
+
+.hero-content {
+    flex: 1;
+    margin-right: 50px;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    color: white;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.hero-image {
+    flex: 0 0 300px;
+    text-align: center;
+}
+
+.hero-image i {
+    font-size: 12rem;
+    color: rgba(255, 255, 255, 0.2);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Features Section */
+.features {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 50px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card i {
+    font-size: 3rem;
+    color: #3498db;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Auth Styles */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px);
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header i {
+    font-size: 4rem;
+    color: #3498db;
+    margin-bottom: 20px;
+}
+
+.auth-header h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    color: #666;
+}
+
+.auth-form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.auth-footer {
+    text-align: center;
+}
+
+.auth-footer p {
+    color: #666;
+}
+
+.switch-auth {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch-auth:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard Styles */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 50px;
+    color: white;
+}
+
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.dashboard-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Account Summary */
+.account-summary {
+    margin-bottom: 50px;
+}
+
+.account-summary h2 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.account-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.account-card:hover {
+    transform: translateY(-5px);
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.account-type {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.account-balance {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.account-number {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Quick Actions */
+.quick-actions {
+    margin-bottom: 50px;
+}
+
+.quick-actions h2 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 15px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #2c3e50;
+}
+
+.action-btn:hover {
+    background: white;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn i {
+    font-size: 2rem;
+    color: #3498db;
+}
+
+.action-btn span {
+    font-weight: 600;
+}
+
+/* Transactions */
+.recent-transactions {
+    margin-bottom: 50px;
+}
+
+.recent-transactions h2 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.transactions-list {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.3s ease;
+}
+
+.transaction-item:hover {
+    background: rgba(52, 152, 219, 0.05);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-info {
+    flex: 1;
+}
+
+.transaction-type {
+    font-weight: 600;
+    color: #2c3e50;
+    text-transform: capitalize;
+}
+
+.transaction-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 2px;
+}
+
+.transaction-date {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 2px;
+}
+
+.transaction-amount {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.transaction-amount.deposit {
+    color: #27ae60;
+}
+
+.transaction-amount.withdrawal {
+    color: #e74c3c;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: modalSlide 0.3s ease;
+}
+
+.modal-large {
+    max-width: 800px;
+}
+
+@keyframes modalSlide {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-header h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+.close {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #e74c3c;
+}
+
+.modal-form {
+    padding: 30px;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.detailed-transactions-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    z-index: 3000;
+    min-width: 300px;
+    border-left: 4px solid #3498db;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left-color: #27ae60;
+}
+
+.notification.error {
+    border-left-color: #e74c3c;
+}
+
+.notification-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+#notification-message {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+#notification-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #999;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+#notification-close:hover {
+    color: #e74c3c;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        height: calc(100vh - 70px);
+        padding-top: 50px;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nav-menu li {
+        margin: 0;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content {
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-image {
+        flex: none;
+    }
+
+    .hero-image i {
+        font-size: 8rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .accounts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-card {
+        padding: 20px;
+    }
+
+    .modal-form,
+    .modal-body {
+        padding: 20px;
+    }
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Empty States */
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    margin-bottom: 10px;
+    color: #999;
+}
+
+/* Animations */
+.fadeIn {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slideUp {
+    animation: slideUp 0.5s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-university"></i>
+                <span>SecureBank Pro</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <ul>
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#login" class="nav-link" id="login-nav">Login</a></li>
+                    <li><a href="#register" class="nav-link" id="register-nav">Register</a></li>
+                    <li><a href="#dashboard" class="nav-link hidden" id="dashboard-nav">Dashboard</a></li>
+                    <li><a href="#" class="nav-link hidden" id="logout-nav">Logout</a></li>
+                </ul>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Welcome to SecureBank Pro</h1>
+                    <p>Your trusted partner for secure online banking with cutting-edge technology and 24/7 support.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" id="hero-login">Login</button>
+                        <button class="btn btn-secondary" id="hero-register">Get Started</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+            </div>
+
+            <div class="features">
+                <h2>Why Choose SecureBank Pro?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-lock"></i>
+                        <h3>Bank-Grade Security</h3>
+                        <p>256-bit SSL encryption and multi-factor authentication keep your money safe.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Banking</h3>
+                        <p>Access your accounts anytime, anywhere with our responsive web platform.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>24/7 Support</h3>
+                        <p>Round-the-clock customer support for all your banking needs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Real-time Transactions</h3>
+                        <p>Instant deposits, withdrawals, and balance updates.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="section">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <i class="fas fa-user-shield"></i>
+                        <h2>Login to Your Account</h2>
+                        <p>Access your secure banking dashboard</p>
+                    </div>
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="login-username">Username</label>
+                            <input type="text" id="login-username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span class="btn-text">Login</span>
+                            <span class="btn-loader hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                        </button>
+                    </form>
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#register" class="switch-auth">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="register" class="section">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <i class="fas fa-user-plus"></i>
+                        <h2>Create Your Account</h2>
+                        <p>Join SecureBank Pro today</p>
+                    </div>
+                    <form id="register-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="register-fullname">Full Name</label>
+                            <input type="text" id="register-fullname" name="full_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-username">Username</label>
+                            <input type="text" id="register-username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email Address</label>
+                            <input type="email" id="register-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-phone">Phone Number (Optional)</label>
+                            <input type="tel" id="register-phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <input type="password" id="register-password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password">Confirm Password</label>
+                            <input type="password" id="register-confirm-password" name="confirm_password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span class="btn-text">Create Account</span>
+                            <span class="btn-loader hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                        </button>
+                    </form>
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#login" class="switch-auth">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>Welcome back, <span id="user-name">User</span>!</h1>
+                    <p>Manage your accounts and transactions securely</p>
+                </div>
+
+                <!-- Account Summary -->
+                <div class="account-summary">
+                    <h2>Your Accounts</h2>
+                    <div id="accounts-container" class="accounts-grid">
+                        <!-- Accounts will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2>Quick Actions</h2>
+                    <div class="actions-grid">
+                        <button class="action-btn" id="deposit-btn">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Deposit</span>
+                        </button>
+                        <button class="action-btn" id="withdraw-btn">
+                            <i class="fas fa-minus-circle"></i>
+                            <span>Withdraw</span>
+                        </button>
+                        <button class="action-btn" id="history-btn">
+                            <i class="fas fa-history"></i>
+                            <span>Transaction History</span>
+                        </button>
+                        <button class="action-btn" id="refresh-btn">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="recent-transactions">
+                    <h2>Recent Transactions</h2>
+                    <div id="transactions-container" class="transactions-list">
+                        <!-- Transactions will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modals -->
+    <!-- Transaction Modal -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Make Transaction</h3>
+                <span class="close" id="close-modal">&times;</span>
+            </div>
+            <form id="transaction-form" class="modal-form">
+                <div class="form-group">
+                    <label for="modal-account-select">Select Account</label>
+                    <select id="modal-account-select" name="account_number" required>
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="modal-amount">Amount</label>
+                    <input type="number" id="modal-amount" name="amount" step="0.01" min="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-description">Description (Optional)</label>
+                    <input type="text" id="modal-description" name="description">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span class="btn-text">Process Transaction</span>
+                    <span class="btn-loader hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Transaction History Modal -->
+    <div id="history-modal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>Transaction History</h3>
+                <span class="close" id="close-history-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="history-account-select">Select Account</label>
+                    <select id="history-account-select">
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+                <div id="detailed-transactions" class="detailed-transactions-list">
+                    <!-- Detailed transactions will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <span id="notification-message"></span>
+            <button id="notification-close">&times;</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Banking Application JavaScript
+class BankingApp {
+    constructor() {
+        this.baseURL = 'http://localhost:5000/api';
+        this.token = localStorage.getItem('banking_token');
+        this.user = JSON.parse(localStorage.getItem('banking_user') || 'null');
+        this.accounts = [];
+        this.currentTransactionType = null;
+
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.setupNavigation();
+
+        // Check if user is already logged in
+        if (this.token && this.user) {
+            this.showSection('dashboard');
+            this.loadDashboard();
+        } else {
+            this.showSection('home');
+        }
+    }
+
+    setupEventListeners() {
+        // Navigation event listeners
+        document.getElementById('hero-login').addEventListener('click', () => this.showSection('login'));
+        document.getElementById('hero-register').addEventListener('click', () => this.showSection('register'));
+        document.getElementById('login-nav').addEventListener('click', () => this.showSection('login'));
+        document.getElementById('register-nav').addEventListener('click', () => this.showSection('register'));
+        document.getElementById('dashboard-nav').addEventListener('click', () => this.showSection('dashboard'));
+        document.getElementById('logout-nav').addEventListener('click', () => this.logout());
+
+        // Auth switch links
+        document.querySelectorAll('.switch-auth').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = e.target.getAttribute('href').substring(1);
+                this.showSection(target);
+            });
+        });
+
+        // Form submissions
+        document.getElementById('login-form').addEventListener('submit', (e) => this.handleLogin(e));
+        document.getElementById('register-form').addEventListener('submit', (e) => this.handleRegister(e));
+        document.getElementById('transaction-form').addEventListener('submit', (e) => this.handleTransaction(e));
+
+        // Dashboard actions
+        document.getElementById('deposit-btn').addEventListener('click', () => this.openTransactionModal('deposit'));
+        document.getElementById('withdraw-btn').addEventListener('click', () => this.openTransactionModal('withdrawal'));
+        document.getElementById('history-btn').addEventListener('click', () => this.openHistoryModal());
+        document.getElementById('refresh-btn').addEventListener('click', () => this.refreshDashboard());
+
+        // Modal controls
+        document.getElementById('close-modal').addEventListener('click', () => this.closeModal('transaction-modal'));
+        document.getElementById('close-history-modal').addEventListener('click', () => this.closeModal('history-modal'));
+
+        // History account selection
+        document.getElementById('history-account-select').addEventListener('change', (e) => {
+            if (e.target.value) {
+                this.loadTransactionHistory(e.target.value);
+            }
+        });
+
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    this.closeModal(modal.id);
+                }
+            });
+        });
+
+        // Notification close
+        document.getElementById('notification-close').addEventListener('click', () => this.hideNotification());
+
+        // Mobile menu toggle
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+    }
+
+    setupNavigation() {
+        // Handle hash-based navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = e.target.getAttribute('href').substring(1);
+                if (target && target !== '#') {
+                    this.showSection(target);
+                }
+            });
+        });
+    }
+
+    showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Show target section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+
+        // Update navigation visibility
+        this.updateNavigation();
+
+        // Close mobile menu if open
+        document.getElementById('nav-menu').classList.remove('active');
+    }
+
+    updateNavigation() {
+        const isLoggedIn = this.token && this.user;
+
+        // Show/hide nav items based on authentication state
+        document.getElementById('login-nav').style.display = isLoggedIn ? 'none' : 'block';
+        document.getElementById('register-nav').style.display = isLoggedIn ? 'none' : 'block';
+        document.getElementById('dashboard-nav').style.display = isLoggedIn ? 'block' : 'none';
+        document.getElementById('logout-nav').style.display = isLoggedIn ? 'block' : 'none';
+    }
+
+    async handleLogin(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+        const data = {
+            username: formData.get('username'),
+            password: formData.get('password')
+        };
+
+        this.setButtonLoading(form.querySelector('.btn'), true);
+
+        try {
+            const response = await this.makeRequest('/login', 'POST', data);
+
+            if (response.token) {
+                this.token = response.token;
+                this.user = response.user;
+
+                localStorage.setItem('banking_token', this.token);
+                localStorage.setItem('banking_user', JSON.stringify(this.user));
+
+                this.showNotification('Login successful! Welcome back.', 'success');
+                this.showSection('dashboard');
+                this.loadDashboard();
+                form.reset();
+            }
+        } catch (error) {
+            this.showNotification(error.message || 'Login failed. Please try again.', 'error');
+        } finally {
+            this.setButtonLoading(form.querySelector('.btn'), false);
+        }
+    }
+
+    async handleRegister(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Validate password confirmation
+        const password = formData.get('password');
+        const confirmPassword = formData.get('confirm_password');
+
+        if (password !== confirmPassword) {
+            this.showNotification('Passwords do not match.', 'error');
+            return;
+        }
+
+        const data = {
+            full_name: formData.get('full_name'),
+            username: formData.get('username'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            password: password
+        };
+
+        this.setButtonLoading(form.querySelector('.btn'), true);
+
+        try {
+            const response = await this.makeRequest('/register', 'POST', data);
+            this.showNotification('Registration successful! Please login.', 'success');
+            this.showSection('login');
+            form.reset();
+        } catch (error) {
+            this.showNotification(error.message || 'Registration failed. Please try again.', 'error');
+        } finally {
+            this.setButtonLoading(form.querySelector('.btn'), false);
+        }
+    }
+
+    async loadDashboard() {
+        try {
+            // Update user name
+            document.getElementById('user-name').textContent = this.user.full_name;
+
+            // Load accounts
+            await this.loadAccounts();
+
+        } catch (error) {
+            this.showNotification('Error loading dashboard: ' + error.message, 'error');
+        }
+    }
+
+    async loadAccounts() {
+        try {
+            const response = await this.makeRequest('/accounts', 'GET');
+            this.accounts = response.accounts;
+            this.renderAccounts();
+            this.populateAccountSelects();
+
+            // Load recent transactions for first account
+            if (this.accounts.length > 0) {
+                await this.loadRecentTransactions(this.accounts[0].account_number);
+            }
+
+        } catch (error) {
+            this.showNotification('Error loading accounts: ' + error.message, 'error');
+        }
+    }
+
+    renderAccounts() {
+        const container = document.getElementById('accounts-container');
+
+        if (this.accounts.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>No accounts found</h3>
+                    <p>Contact support to create your first account.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = this.accounts.map(account => `
+            <div class="account-card">
+                <div class="account-header">
+                    <span class="account-type">${account.account_type.toUpperCase()}</span>
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="account-balance">$${account.balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                <div class="account-number">Account: ${account.account_number}</div>
+            </div>
+        `).join('');
+    }
+
+    populateAccountSelects() {
+        const selects = [
+            document.getElementById('modal-account-select'),
+            document.getElementById('history-account-select')
+        ];
+
+        const optionsHTML = this.accounts.map(account => 
+            `<option value="${account.account_number}">${account.account_type.toUpperCase()} - ${account.account_number} ($${account.balance.toFixed(2)})</option>`
+        ).join('');
+
+        selects.forEach(select => {
+            if (select) {
+                select.innerHTML = '<option value="">Select an account...</option>' + optionsHTML;
+            }
+        });
+    }
+
+    async loadRecentTransactions(accountNumber) {
+        try {
+            const response = await this.makeRequest(`/transactions/${accountNumber}`, 'GET');
+            this.renderRecentTransactions(response.transactions.slice(0, 5)); // Show only 5 recent
+        } catch (error) {
+            console.error('Error loading recent transactions:', error);
+        }
+    }
+
+    renderRecentTransactions(transactions) {
+        const container = document.getElementById('transactions-container');
+
+        if (!transactions || transactions.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-receipt"></i>
+                    <h3>No recent transactions</h3>
+                    <p>Your transaction history will appear here.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = transactions.map(transaction => `
+            <div class="transaction-item">
+                <div class="transaction-info">
+                    <div class="transaction-type">${transaction.type}</div>
+                    <div class="transaction-description">${transaction.description || 'No description'}</div>
+                    <div class="transaction-date">${this.formatDate(transaction.date)}</div>
+                </div>
+                <div class="transaction-amount ${transaction.type}">
+                    ${transaction.type === 'deposit' ? '+' : '-'}$${transaction.amount.toFixed(2)}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    openTransactionModal(type) {
+        this.currentTransactionType = type;
+        const modal = document.getElementById('transaction-modal');
+        const title = document.getElementById('modal-title');
+
+        title.textContent = type === 'deposit' ? 'Make Deposit' : 'Make Withdrawal';
+        modal.style.display = 'block';
+
+        // Reset form
+        document.getElementById('transaction-form').reset();
+    }
+
+    async handleTransaction(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const data = {
+            type: this.currentTransactionType,
+            account_number: formData.get('account_number'),
+            amount: parseFloat(formData.get('amount')),
+            description: formData.get('description') || `${this.currentTransactionType} transaction`
+        };
+
+        if (!data.account_number) {
+            this.showNotification('Please select an account.', 'error');
+            return;
+        }
+
+        if (!data.amount || data.amount <= 0) {
+            this.showNotification('Please enter a valid amount.', 'error');
+            return;
+        }
+
+        this.setButtonLoading(form.querySelector('.btn'), true);
+
+        try {
+            const response = await this.makeRequest('/transactions', 'POST', data);
+            this.showNotification(response.message, 'success');
+            this.closeModal('transaction-modal');
+            form.reset();
+
+            // Refresh dashboard
+            await this.refreshDashboard();
+
+        } catch (error) {
+            this.showNotification(error.message || 'Transaction failed.', 'error');
+        } finally {
+            this.setButtonLoading(form.querySelector('.btn'), false);
+        }
+    }
+
+    openHistoryModal() {
+        const modal = document.getElementById('history-modal');
+        modal.style.display = 'block';
+
+        // Reset selection
+        document.getElementById('history-account-select').value = '';
+        document.getElementById('detailed-transactions').innerHTML = '<p>Select an account to view transaction history.</p>';
+    }
+
+    async loadTransactionHistory(accountNumber) {
+        const container = document.getElementById('detailed-transactions');
+        container.innerHTML = '<div class="loading">Loading transactions...</div>';
+
+        try {
+            const response = await this.makeRequest(`/transactions/${accountNumber}`, 'GET');
+            this.renderDetailedTransactions(response.transactions);
+        } catch (error) {
+            container.innerHTML = `<div class="error">Error loading transactions: ${error.message}</div>`;
+        }
+    }
+
+    renderDetailedTransactions(transactions) {
+        const container = document.getElementById('detailed-transactions');
+
+        if (!transactions || transactions.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-receipt"></i>
+                    <h3>No transactions found</h3>
+                    <p>This account has no transaction history yet.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="transactions-list">
+                ${transactions.map(transaction => `
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-type">${transaction.type}</div>
+                            <div class="transaction-description">${transaction.description || 'No description'}</div>
+                            <div class="transaction-date">${this.formatDate(transaction.date)}</div>
+                        </div>
+                        <div class="transaction-details">
+                            <div class="transaction-amount ${transaction.type}">
+                                ${transaction.type === 'deposit' ? '+' : '-'}$${transaction.amount.toFixed(2)}
+                            </div>
+                            <div class="balance-after">Balance: $${transaction.balance_after.toFixed(2)}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    async refreshDashboard() {
+        const refreshBtn = document.getElementById('refresh-btn');
+        refreshBtn.classList.add('loading');
+
+        try {
+            await this.loadDashboard();
+            this.showNotification('Dashboard refreshed successfully.', 'success');
+        } catch (error) {
+            this.showNotification('Error refreshing dashboard.', 'error');
+        } finally {
+            refreshBtn.classList.remove('loading');
+        }
+    }
+
+    closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'none';
+    }
+
+    logout() {
+        this.token = null;
+        this.user = null;
+        this.accounts = [];
+
+        localStorage.removeItem('banking_token');
+        localStorage.removeItem('banking_user');
+
+        this.showNotification('Logged out successfully.', 'success');
+        this.showSection('home');
+        this.updateNavigation();
+    }
+
+    async makeRequest(endpoint, method = 'GET', data = null) {
+        const url = this.baseURL + endpoint;
+        const config = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        if (this.token) {
+            config.headers['Authorization'] = `Bearer ${this.token}`;
+        }
+
+        if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+            config.body = JSON.stringify(data);
+        }
+
+        try {
+            const response = await fetch(url, config);
+            const responseData = await response.json();
+
+            if (!response.ok) {
+                throw new Error(responseData.error || `HTTP error! status: ${response.status}`);
+            }
+
+            return responseData;
+        } catch (error) {
+            if (error.message.includes('Token is invalid') || error.message.includes('Token is missing')) {
+                this.logout();
+                throw new Error('Session expired. Please login again.');
+            }
+            throw error;
+        }
+    }
+
+    showNotification(message, type = 'info') {
+        const notification = document.getElementById('notification');
+        const messageElement = document.getElementById('notification-message');
+
+        messageElement.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.classList.add('show');
+
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            this.hideNotification();
+        }, 5000);
+    }
+
+    hideNotification() {
+        const notification = document.getElementById('notification');
+        notification.classList.remove('show');
+    }
+
+    setButtonLoading(button, isLoading) {
+        const text = button.querySelector('.btn-text');
+        const loader = button.querySelector('.btn-loader');
+
+        if (isLoading) {
+            text.style.display = 'none';
+            loader.classList.remove('hidden');
+            button.disabled = true;
+        } else {
+            text.style.display = 'inline';
+            loader.classList.add('hidden');
+            button.disabled = false;
+        }
+    }
+
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+}
+
+// Initialize the application when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new BankingApp();
+});
+
+// Additional utility functions
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    }).format(amount);
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Service Worker Registration (for PWA capabilities)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
+
+    </script>
+</body>
+</html>
